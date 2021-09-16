@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { MatInputModule } from '@angular/material/input';
     MatListModule,
     FormsModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule,
+    MatCardModule
   ]
 })
 export class UniverseManagementModule { }
