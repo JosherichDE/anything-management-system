@@ -19,6 +19,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { UniverseManagementModule } from './universe-management/universe-management.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     BrowserAnimationsModule,
     MatSliderModule,
     UniverseEditorRoutingModule,
+    UniverseManagementModule,
     FormsModule,
     MatSidenavModule,
     MatSelectModule,

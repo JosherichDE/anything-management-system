@@ -1,0 +1,49 @@
+<h2>Universe Management - ID: {{ universeId | async }}</h2>
+<h3>Artifacts</h3>
+
+<div class="artifact-type-selection">
+    <mat-form-field appearance="fill">
+        <mat-label>Select an Artifact</mat-label>
+        <mat-select [(value)]="selectedArtifact" (selectionChange)="onArtifactTypeSelection($event)">
+            <mat-option *ngFor='let artifact of universeArtifacts' [value]='artifact'>{{artifact.type}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <p>You selected: {{selectedArtifact.identifier}}</p>
+</div>
+
+<div class="artifact-instance-selection">
+    <p>{{selectedArtifact.type}}</p>
+    <p>{{selectedArtifact.properties}}</p>
+    <mat-selection-list #instances [multiple]="false" (selectionChange)="onArtifactInstanceSelection($event, instances.selectedOptions)">
+        <mat-list-option *ngFor="let instance of artifactInstances" [value]='instance'>
+            {{instance.identifier}}
+        </mat-list-option>
+    </mat-selection-list>
+
+    <p>
+        Option selected: {{instance?.type?.type}}
+    </p>
+
+</div>
+
+<div class="artifact-instance-property-editor">
+    {{instance?.identifier}}
+ 
+    <div *ngFor="let propertie of instance?.propertieValueMatrix">
+        <p>Name:{{propertie.property}} </p>
+        <p>Value:{{propertie.value}} </p>
+
+     
+        <mat-form-field class="example-form-field">
+            <mat-label>{{propertie.property}} Value</mat-label>
+            <input matInput type="text" [(ngModel)]="propertie.value">
+            <button *ngIf="propertie.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="propertie.value=''">
+               <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+       
+
+    </div>
+
+</div>
