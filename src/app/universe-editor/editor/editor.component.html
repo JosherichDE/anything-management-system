@@ -1,0 +1,13 @@
+<h2>Universe Editor - ID: {{ universeId | async }}</h2>
+<h3>Artifacts</h3>
+<button add-button mat-raised-button aria-label="Add" (click)="addArtifact()">
+    <mat-icon>add</mat-icon>
+    Add Artifact
+</button>
+<div fxLayout="row wrap">
+    <div *ngFor='let artifact of universeArtifacts' fxFlex="23%" fxFlex.xs="100%" fxFlex.sm="30%">
+        <div class="artifact-editor">
+            <app-universal-artifact-editor [universalArtifact]="artifact"></app-universal-artifact-editor>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <button mat-card-avatar matSuffix mat-icon-button aria-label="Clear" (click)="deleteArtifact()">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <mat-card-title>
+            <mat-form-field class="example-form-field">
+                <mat-label>Artifact Type</mat-label>
+                <input matInput type="text" [(ngModel)]="universalArtifact.type">
+                <button *ngIf="universalArtifact.type" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="universalArtifact.type=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </mat-card-title>
+        <mat-card-subtitle>{{ universalArtifact.identifier }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image class="card-image" src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu">
+    <mat-card-content>
+        <h3>Properties</h3>
+        <div *ngFor='let propertie of universalArtifact.properties; let index = index; trackBy:trackByIndex;'>
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Property Name</mat-label>
+                <input matInput type="text" [(ngModel)]="universalArtifact.properties[index]">
+                <button *ngIf="universalArtifact.properties[index]" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="universalArtifact.properties[index]=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="deletePropertie(propertie)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button matSuffix mat-icon-button aria-label="Add" (click)="addPropertie()">
+            <mat-icon>add</mat-icon>
+        </button>
+
+    </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+</mat-card>
