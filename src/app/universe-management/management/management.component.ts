@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ArtifactClass } from 'src/app/shared/artifact-class/artifact-class.model';
 import { UniverseService } from 'src/app/shared/universe/universe.service';
 import { ArtifactInstance } from '../../shared/artifact-instance/artifact-instance.model';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-management',
@@ -17,6 +20,8 @@ export class ManagementComponent implements OnInit {
   selectedArtifactClass?: ArtifactClass;
   selectedArtifactInstance?: ArtifactInstance;
   artifactInstances?: ArtifactInstance[];
+  searchControl: FormControl = new FormControl();
+  private debounce: number = 400;
 
   constructor(private route: ActivatedRoute, private universeService: UniverseService) {
     this.universeId = this.route.paramMap
@@ -26,13 +31,23 @@ export class ManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchControl.valueChanges
+      .pipe(debounceTime(this.debounce), distinctUntilChanged())
+      .subscribe(query => {
+        if (this.selectedArtifactClass) {
+          this.artifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, query);
+        }
+      });
+
+
     this.universeService.getUniverseArtifactClasses().subscribe(
       artifacts => {
         this.universeArtifactClasses = artifacts;
         this.selectedArtifactClass = this.universeArtifactClasses[0];
-        this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass);
+        this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
       }
     );
+
   }
 
   onArtifactTypeSelection(e: any) {
@@ -60,7 +75,26 @@ export class ManagementComponent implements OnInit {
 
   refreshArtifactInstances() {
     if (this.selectedArtifactClass) {
-      this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass);
+      this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
     }
   }
+
+  saveUniverse() {
+    this.universeService.saveUniverse();
+  }
+
+
+
+  file: any;
+  fileChanged(e: any) {
+    this.file = e.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.universeService.loadUniverse(fileReader.result);
+      this.refreshArtifactInstances();
+    }
+    fileReader.readAsText(this.file);
+   
+  }
+
 }

@@ -1,27 +1,44 @@
 <h2>Universe Management - ID: {{ universeId | async }}</h2>
-<h3>Artifacts</h3>
-
 <div class="artifact-type-selection">
     <mat-form-field appearance="fill">
-        <mat-label>Select an Artifact</mat-label>
+        <mat-label>Select an Artifact Class</mat-label>
         <mat-select [(value)]="selectedArtifactClass" (selectionChange)="onArtifactTypeSelection($event)">
             <mat-option *ngFor='let artifact of universeArtifactClasses' [value]='artifact'>{{artifact.type}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <p>You selected: {{selectedArtifactClass?.identifier}}</p>
+</div>
+
+<div class="universe-load-save">
+    <button mat-raised-button color="accent" aria-label="Add" (click)="saveUniverse()">
+        <mat-icon>add</mat-icon>
+        Save universe
+    </button>
+
+    <div class="Block">
+        <label id="lbl">Code </label>
+        <input type='file' (change)="fileChanged($event)">
+      
+      </div>
+</div>
+<mat-divider></mat-divider>
+<h1>{{selectedArtifactClass?.type}}</h1>
+<div class="artifact-search">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput #search maxlength="256" placeholder="" [formControl]="searchControl">
+      </mat-form-field>
 </div>
 
 <div class="artifact-adding">
-    <button add-button mat-raised-button aria-label="Add" (click)="addArtifactInstance()">
+    <button mat-raised-button color="accent" aria-label="Add" (click)="addArtifactInstance()">
         <mat-icon>add</mat-icon>
-        Add {{ selectedArtifactClass?.type }}
+        Add new {{ selectedArtifactClass?.type }}
     </button>
 </div>
 
 <div class="flex">
     <div class="artifact-instance-selection">
-        <h1>{{selectedArtifactClass?.type}}</h1>
         <mat-selection-list #instances [multiple]="false"
             (selectionChange)="onArtifactInstanceSelection($event, instances.selectedOptions)">
             <mat-list-option *ngFor="let instance of artifactInstances" [value]='instance'>
@@ -33,6 +50,7 @@
 
     <div *ngIf='selectedArtifactInstance' class="artifact-instance-details-editor">
         <mat-card>
+            <h3>Details</h3>
             {{selectedArtifactInstance?.identifier}}
             <button mat-card-avatar matSuffix mat-icon-button aria-label="Clear"
                 (click)="deleteArtifactInstance(selectedArtifactInstance)">
