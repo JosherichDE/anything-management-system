@@ -1,13 +1,13 @@
 import { v4 as uuid } from 'uuid';
-import { UniversalArtifact } from '../universe-editor/universal-artifact.model';
-import { PropertyValue } from './property-value.model';
+import { ArtifactClass } from '../artifact-class/artifact-class.model';
+import { PropertyValuePair } from '../property-value-pair/property-value-pair.model';
 
 export class ArtifactInstance {
     identifier: string = uuid();
-    type?: UniversalArtifact;
-    propertieValueMatrix: PropertyValue[];
+    type?: ArtifactClass;
+    propertieValueMatrix: PropertyValuePair[];
 
-    constructor(type: UniversalArtifact){
+    constructor(type: ArtifactClass){
         this.type = type;
         this.propertieValueMatrix = [];
         this.type.properties.forEach(property => {

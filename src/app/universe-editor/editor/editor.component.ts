@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { UniversalArtifact } from '../universal-artifact.model';
-import { UniverseService } from '../universe.service';
+import { ArtifactClass } from '../../shared/artifact-class/artifact-class.model';
+import { UniverseService } from '../../shared/universe/universe.service';
 
 @Component({
   selector: 'app-editor',
@@ -11,7 +11,7 @@ import { UniverseService } from '../universe.service';
 })
 export class EditorComponent implements OnInit {
   universeId: any;
-  universeArtifacts?: UniversalArtifact[];
+  universeArtifacts?: ArtifactClass[];
 
   constructor(private route: ActivatedRoute, private universeService: UniverseService) {
     this.universeId = this.route.paramMap
@@ -21,10 +21,10 @@ export class EditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.universeService.getUniverseArtifacts().subscribe(artifacts => this.universeArtifacts = artifacts);
+    this.universeService.getUniverseArtifactClasses().subscribe(artifacts => this.universeArtifacts = artifacts);
   }
 
   addArtifact(): void {
-    this.universeService.addArtifact();
+    this.universeService.addArtifactClass();
   }
 }

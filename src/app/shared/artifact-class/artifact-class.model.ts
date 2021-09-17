@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-export class UniversalArtifact {
+export class ArtifactClass {
     identifier: string = uuid();
     type: string = '';
     properties: string[] = [];

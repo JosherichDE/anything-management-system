@@ -1,17 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UniversalArtifact } from '../universal-artifact.model';
-import { UniverseService } from '../universe.service';
+import { ArtifactClass } from 'src/app/shared/artifact-class/artifact-class.model';
+import { UniverseService } from '../../shared/universe/universe.service';
 
 @Component({
-  selector: 'app-universal-artifact-editor',
-  templateUrl: './universal-artifact-editor.component.html',
-  styleUrls: ['./universal-artifact-editor.component.less']
+  selector: 'app-artifact-editor',
+  templateUrl: './artifact-editor.component.html',
+  styleUrls: ['./artifact-editor.component.less']
 })
-export class UniversalArtifactEditorComponent implements OnInit {
+export class ArtifactEditorComponent implements OnInit {
 
 
   @Input()
-  universalArtifact!: UniversalArtifact;
+  universalArtifact!: ArtifactClass;
 
   constructor(private universeService: UniverseService) { }
 
@@ -34,7 +34,7 @@ export class UniversalArtifactEditorComponent implements OnInit {
   }
 
   deleteArtifact() {
-    this.universeService.deleteArtifact(this.universalArtifact);
+    this.universeService.deleteArtifactClass(this.universalArtifact);
   }
 
 }

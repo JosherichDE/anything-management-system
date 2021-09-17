@@ -1,5 +1,4 @@
-export class PropertyValue {
+export class PropertyValuePair {
     property: any;
     value: any;
-    
 }

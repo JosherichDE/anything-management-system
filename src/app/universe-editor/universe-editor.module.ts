@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UniverseEditorRoutingModule } from './universe-editor-routing.module';
 import { EditorComponent } from './editor/editor.component';
-import { UniverseService } from './universe.service';
-import { UniversalArtifactEditorComponent } from './universal-artifact-editor/universal-artifact-editor.component';
+import { ArtifactEditorComponent } from './artifact-editor/artifact-editor.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     EditorComponent,
-    UniversalArtifactEditorComponent
+    ArtifactEditorComponent
   ],
   imports: [
     CommonModule,

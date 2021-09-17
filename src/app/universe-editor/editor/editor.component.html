@@ -7,7 +7,7 @@
 <div fxLayout="row wrap">
     <div *ngFor='let artifact of universeArtifacts' fxFlex="23%" fxFlex.xs="100%" fxFlex.sm="30%">
         <div class="artifact-editor">
-            <app-universal-artifact-editor [universalArtifact]="artifact"></app-universal-artifact-editor>
+            <app-artifact-editor [universalArtifact]="artifact"></app-artifact-editor>
         </div>
     </div>
 </div>
