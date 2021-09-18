@@ -15,7 +15,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class ManagementComponent implements OnInit {
 
-  universeId: any;
+  universeIdentifier: any;
+  routeSub: any;
   universeArtifactClasses?: ArtifactClass[];
   selectedArtifactClass?: ArtifactClass;
   selectedArtifactInstance?: ArtifactInstance;
@@ -24,13 +25,13 @@ export class ManagementComponent implements OnInit {
   private debounce: number = 400;
 
   constructor(private route: ActivatedRoute, private universeService: UniverseService) {
-    this.universeId = this.route.paramMap
-      .pipe(
-        map((params: ParamMap) => params.get('universeId'))
-      );
   }
 
   ngOnInit(): void {
+    this.routeSub = this.route.params.subscribe(params => {
+      this.universeIdentifier = params['universeId'];
+    });
+
     this.searchControl.valueChanges
       .pipe(debounceTime(this.debounce), distinctUntilChanged())
       .subscribe(query => {
@@ -40,7 +41,7 @@ export class ManagementComponent implements OnInit {
       });
 
 
-    this.universeService.getUniverseArtifactClasses().subscribe(
+    this.universeService.getUniverseArtifactClasses(this.universeIdentifier).subscribe(
       artifacts => {
         this.universeArtifactClasses = artifacts;
         this.selectedArtifactClass = this.universeArtifactClasses[0];

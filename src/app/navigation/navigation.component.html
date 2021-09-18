@@ -3,11 +3,11 @@
         <mat-icon matListIcon>home</mat-icon>
         <a matLine>Home</a>
     </a>
-    <a mat-list-item routerLink="/universe-management/IT" routerLinkActive="active">
+    <a mat-list-item routerLink="/universe-management/{{universe?.id}}" routerLinkActive="active">
         <mat-icon matListIcon>editor</mat-icon>
         <a matLine >Management</a>
     </a>
-    <a mat-list-item routerLink="/universe-editor/IT" routerLinkActive="active">
+    <a mat-list-item routerLink="/universe-editor/{{universe?.id}}" routerLinkActive="active">
         <mat-icon matListIcon>editor</mat-icon>
         <a matLine >Editor</a>
     </a>

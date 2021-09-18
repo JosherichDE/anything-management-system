@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoadUniverseDialogComponent } from '../shared/load-universe-dialog/load-universe-dialog.component';
+import { Universe } from '../shared/universe/universe.model';
 import { UniverseService } from '../shared/universe/universe.service';
 
 @Component({
@@ -9,16 +10,19 @@ import { UniverseService } from '../shared/universe/universe.service';
   styleUrls: ['./homepage.component.less']
 })
 export class HomepageComponent implements OnInit {
+  
+  universe: Universe;
 
-
- 
   constructor(private universeService: UniverseService,
     public dialog: MatDialog) {
-
+      this.universe = new Universe();
   }
 
   ngOnInit(): void {
-
+    this.universeService.getUniverse().subscribe(universe =>
+      {
+         this.universe = universe
+        });
   }
 
   saveUniverse() {
@@ -30,11 +34,10 @@ export class HomepageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      
+      // The Observale is not triggered (ngOnInit), so we have to refresh manual :(
+        // Use Subject !?
+      this.universe = this.universeService.universe;
     });
   }
-
-
-
-  
-
 }

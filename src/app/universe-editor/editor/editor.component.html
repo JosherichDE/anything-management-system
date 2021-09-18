@@ -1,5 +1,10 @@
-<h2>Universe Editor - ID: {{ universeId | async }}</h2>
+<h2>Universe Editor - ID: {{ universeIdentifier }}</h2>
+<p>
+    <input matInput type="text" [(ngModel)]="universe.name">
+</p>
+
 <h3>Artifacts</h3>
+
 <button add-button mat-raised-button aria-label="Add" (click)="addArtifact()">
     <mat-icon>add</mat-icon>
     Add Artifact
