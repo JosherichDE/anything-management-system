@@ -3,16 +3,24 @@ import { ArtifactClass } from '../artifact-class/artifact-class.model';
 import { PropertyValuePair } from '../property-value-pair/property-value-pair.model';
 
 export class ArtifactInstance {
-    identifier: string = uuid();
-    type?: ArtifactClass;
-    propertieValueMatrix: PropertyValuePair[];
+    identifier: string;
+    artifactTypeIdentifier: string;
+    propertieValuePairs: PropertyValuePair[];
 
-    constructor(type: ArtifactClass){
-        this.type = type;
-        this.propertieValueMatrix = [];
-        this.type.properties.forEach(property => {
-            this.propertieValueMatrix.push({ property: property,value :[]});
-        });
-        
+    private constructor(artifactTypeIdentifier: string, propertieValuePairs: PropertyValuePair[]) {
+        this.artifactTypeIdentifier = artifactTypeIdentifier;
+        this.propertieValuePairs = propertieValuePairs
+        this.identifier = uuid();
     }
+
+    public static Create(artifactClass: ArtifactClass): ArtifactInstance {
+        let generated: ArtifactInstance = new ArtifactInstance(artifactClass.identifier, []);
+
+        artifactClass.properties.forEach(property => {
+            generated.propertieValuePairs.push({ property: property, value: [] });
+        });
+
+        return generated;
+    }
+
 }

@@ -3,6 +3,6 @@ import { ArtifactInstance } from './artifact-instance.model';
 
 describe('ArtifactInstance', () => {
   it('should create an instance', () => {
-    expect(new ArtifactInstance(new ArtifactClass())).toBeTruthy();
+    expect(ArtifactInstance.Create(new ArtifactClass())).toBeTruthy();
   });
 });

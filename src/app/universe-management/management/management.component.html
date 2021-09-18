@@ -3,7 +3,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Select an Artifact Class</mat-label>
         <mat-select [(value)]="selectedArtifactClass" (selectionChange)="onArtifactTypeSelection($event)">
-            <mat-option *ngFor='let artifact of universeArtifactClasses' [value]='artifact'>{{artifact.type}}
+            <mat-option *ngFor='let artifact of universeArtifactClasses' [value]='artifact'>{{artifact.name}}
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -22,7 +22,7 @@
       </div>
 </div>
 <mat-divider></mat-divider>
-<h1>{{selectedArtifactClass?.type}}</h1>
+<h1>{{selectedArtifactClass?.name}}</h1>
 <div class="artifact-search">
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Search</mat-label>
@@ -33,7 +33,7 @@
 <div class="artifact-adding">
     <button mat-raised-button color="accent" aria-label="Add" (click)="addArtifactInstance()">
         <mat-icon>add</mat-icon>
-        Add new {{ selectedArtifactClass?.type }}
+        Add new {{ selectedArtifactClass?.name }}
     </button>
 </div>
 
@@ -56,7 +56,7 @@
                 (click)="deleteArtifactInstance(selectedArtifactInstance)">
                 <mat-icon>delete</mat-icon>
             </button>
-            <div *ngFor="let propertie of selectedArtifactInstance?.propertieValueMatrix">
+            <div *ngFor="let propertie of selectedArtifactInstance?.propertieValuePairs">
                 <mat-form-field class="example-form-field">
                     <mat-label>{{propertie.property}}</mat-label>
                     <input matInput type="text" [(ngModel)]="propertie.value">

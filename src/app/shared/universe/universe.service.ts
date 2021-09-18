@@ -5,7 +5,6 @@ import { ArtifactClass } from '../artifact-class/artifact-class.model';
 import { ArtifactInstance } from '../artifact-instance/artifact-instance.model';
 import { Universe } from './universe.model';
 import * as FileSaver from 'file-saver';
-import { JsonpClientBackend } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +19,11 @@ export class UniverseService {
   }
 
   public getArtifactInstances(artifactClassIdentifier: string) : ArtifactInstance[] {
-    return this.artifactInstances.filter(x => x.type?.identifier == artifactClassIdentifier);
+    return this.artifactInstances.filter(x => x.artifactTypeIdentifier == artifactClassIdentifier);
   }
 
   public searchArtifactInstances(artifactClass: ArtifactClass, query: string) : ArtifactInstance[] {
-    return this.getArtifactInstances(artifactClass.identifier).filter(x => x.propertieValueMatrix.find(x => x.value.includes(query)) || x.identifier.includes(query));
+    return this.getArtifactInstances(artifactClass.identifier).filter(x => x.propertieValuePairs.find(x => x.value.includes(query)) || x.identifier.includes(query));
   }
 
   public deleteArtifactClass(artifact: ArtifactClass) {
@@ -35,8 +34,9 @@ export class UniverseService {
     this.artifactClasses.push(new ArtifactClass());
   }
 
-  addArtifactInstance(selectedArtifact: ArtifactClass) : void {
-    this.artifactInstances?.push(new ArtifactInstance(selectedArtifact));
+  addArtifactInstance(selectedArtifactClass: ArtifactClass) : void {
+    let newArtifactInstance = ArtifactInstance.Create(selectedArtifactClass);
+    this.artifactInstances.push(newArtifactInstance);
   }
 
   deleteArtifactInstance(instance: ArtifactInstance) {
@@ -61,6 +61,5 @@ export class UniverseService {
     let toLoad: Universe = JSON.parse(blobString);
     this.artifactClasses = toLoad.artifactClasses;
     this.artifactInstances = toLoad.artifactInstances;
-
   }
 }
