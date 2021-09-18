@@ -18,8 +18,11 @@ import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { UniverseManagementModule } from './universe-management/universe-management.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { UniverseManagementModule } from './universe-management/universe-managem
     MatButtonModule,
     MatListModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    FlexLayoutModule,
+    MatDialogModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

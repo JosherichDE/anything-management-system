@@ -9,18 +9,6 @@
     </mat-form-field>
 </div>
 
-<div class="universe-load-save">
-    <button mat-raised-button color="accent" aria-label="Add" (click)="saveUniverse()">
-        <mat-icon>add</mat-icon>
-        Save universe
-    </button>
-
-    <div class="Block">
-        <label id="lbl">Code </label>
-        <input type='file' (change)="fileChanged($event)">
-      
-      </div>
-</div>
 <mat-divider></mat-divider>
 <h1>{{selectedArtifactClass?.name}}</h1>
 <div class="artifact-search">

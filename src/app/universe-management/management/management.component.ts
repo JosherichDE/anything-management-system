@@ -78,23 +78,4 @@ export class ManagementComponent implements OnInit {
       this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
     }
   }
-
-  saveUniverse() {
-    this.universeService.saveUniverse();
-  }
-
-
-
-  file: any;
-  fileChanged(e: any) {
-    this.file = e.target.files[0];
-    let fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      this.universeService.loadUniverse(fileReader.result);
-      this.refreshArtifactInstances();
-    }
-    fileReader.readAsText(this.file);
-   
-  }
-
 }

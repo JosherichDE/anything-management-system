@@ -1,25 +1,42 @@
-<mat-nav-list>
-    <mat-grid-list cols="5" rowHeight="3:1">
-        <mat-grid-tile>
-            <mat-card>
-                <mat-card-content>
-                    <a mat-list-item routerLink="/universe-management/IT" routerLinkActive="active">
-                        <mat-icon class="big-icon" inline="false" matListIcon>work</mat-icon>
-                        <a matLine>Management</a>
-                        <a matLine>Manage ur universe!</a>
-                    </a>
-                </mat-card-content>
-            </mat-card>
-        </mat-grid-tile>
+<div fxLayout="row wrap">
+    <mat-card class="feature">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image">
+                <mat-icon class="big-icon" inline="false" matListIcon>language</mat-icon>
+            </div>
+            <mat-card-title>Universe</mat-card-title>
+            <mat-card-subtitle>Save & Load ur data!</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-button>Create</button>
+            <button mat-button (click)="saveUniverse()">Save</button>
+            <button mat-button (click)="openLoadUniverseDialog()">Load</button>
+        </mat-card-actions>
+    </mat-card>
 
-        <mat-grid-tile>
-            <mat-card>
-                <a mat-list-item routerLink="/universe-editor/IT" routerLinkActive="active">
-                    <mat-icon class="big-icon" inline="false" matListIcon>build</mat-icon>
-                    <a matLine>Editor</a>
-                    <a matLine>Whats ur universe about?</a>
-                </a>
-            </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
-</mat-nav-list>
+    <mat-card class="feature" routerLink="/universe-management/IT">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image">
+                <mat-icon class="big-icon" inline="false" matListIcon>work</mat-icon>
+            </div>
+            <mat-card-title>Management</mat-card-title>
+            <mat-card-subtitle>Manage ur universe!</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-button>Open Management</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature" routerLink="/universe-editor/IT">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image">
+                <mat-icon class="big-icon" inline="false" matListIcon>editor</mat-icon>
+            </div>
+            <mat-card-title>Editor</mat-card-title>
+            <mat-card-subtitle>Whats ur universe about?</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-button>Open Universe Creator</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
