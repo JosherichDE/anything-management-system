@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LoadUniverseDialogComponent } from '../shared/load-universe-dialog/load-universe-dialog.component';
-import { Universe } from '../shared/universe/universe.model';
-import { UniverseService } from '../shared/universe/universe.service';
+import { LoadUniverseDialogComponent } from '../shared/components/load-universe-dialog/load-universe-dialog.component';
+import { Universe } from '../shared/models/universe/universe.model';
+import { UniverseService } from '../shared/services/universe.service';
 
 @Component({
   selector: 'app-homepage',

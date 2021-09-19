@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Universe } from '../shared/universe/universe.model';
-import { UniverseService } from '../shared/universe/universe.service';
+import { Universe } from '../../models/universe/universe.model';
+import { UniverseService } from '../../services/universe.service';
 
 @Component({
   selector: 'app-navigation',

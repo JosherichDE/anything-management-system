@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { ARTIFACT_MOCKS } from '../artifact-class/artifact-class-mocks';
-import { ArtifactClass } from '../artifact-class/artifact-class.model';
-import { ArtifactInstance } from '../artifact-instance/artifact-instance.model';
-import { Universe } from './universe.model';
+import { ARTIFACT_MOCKS } from '../models/artifact-class/artifact-class-mocks';
+import { ArtifactClass } from '../models/artifact-class/artifact-class.model';
+import { ArtifactInstance } from '../models/artifact-instance/artifact-instance.model';
+import { Universe } from '../models/universe/universe.model';
 import * as FileSaver from 'file-saver';
 
 @Injectable({

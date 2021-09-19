@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     EditorComponent,
@@ -18,12 +19,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   imports: [
     CommonModule,
     UniverseEditorRoutingModule,
+    FormsModule,
+    FlexLayoutModule,
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule,
     MatCardModule,
-    FlexLayoutModule
   ]
 })
 export class UniverseEditorModule { }

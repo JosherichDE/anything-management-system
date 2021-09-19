@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UniverseService } from '../universe/universe.service';
+import { UniverseService } from '../../services/universe.service';
 
 @Component({
   selector: 'app-load-universe-dialog',
