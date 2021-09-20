@@ -15,7 +15,7 @@
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Search</mat-label>
         <input matInput #search maxlength="256" placeholder="" [formControl]="searchControl">
-      </mat-form-field>
+    </mat-form-field>
 </div>
 
 <div class="artifact-adding">
@@ -29,9 +29,17 @@
     <div class="artifact-instance-selection">
         <mat-selection-list #instances [multiple]="false"
             (selectionChange)="onArtifactInstanceSelection($event, instances.selectedOptions)">
-            <mat-list-option *ngFor="let instance of filteredArtifactInstances" [value]='instance'>
-                {{instance.identifier}}
+
+            <mat-list-option class="artifact-instance-hit" *ngFor="let instance of filteredArtifactInstances"
+                [value]='instance'>
+                <div class="artifact-instance-hit-content">
+                   <p class="artifact-instance-hit-headline"> {{instance.identifier}}</p>
+                    <div *ngFor="let property of instance.propertieValuePairs">
+                        {{property.property}}: {{property.value}}
+                    </div>
+                </div>
             </mat-list-option>
+
         </mat-selection-list>
 
     </div>

@@ -5,6 +5,7 @@ import { ArtifactClass } from '../models/artifact-class/artifact-class.model';
 import { ArtifactInstance } from '../models/artifact-instance/artifact-instance.model';
 import { Universe } from '../models/universe/universe.model';
 import * as FileSaver from 'file-saver';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +19,19 @@ export class UniverseService {
     this.universeSubject = new BehaviorSubject(this.universe);
   }
 
-  private MockUniverse(universeIdentfier?: string) : Universe {
+  private MockUniverse(universeIdentfier?: string): Universe {
     let mockUniverse = new Universe();
     mockUniverse.name = "My Default Universe";
     mockUniverse.artifactClasses = ARTIFACT_MOCKS;
     mockUniverse.artifactInstances = [];
 
-    if(universeIdentfier) {
+    // Create Mock Instances
+    for (let index = 0; index < 2; index++) {
+      let newArtifactInstance = ArtifactInstance.Create(mockUniverse.artifactClasses[0]);
+      mockUniverse.artifactInstances.push(newArtifactInstance);
+    }
+
+    if (universeIdentfier) {
       mockUniverse.id = universeIdentfier;
     }
 
@@ -37,7 +44,7 @@ export class UniverseService {
   }
 
   public getUniverse(universeIdentifier?: string): BehaviorSubject<Universe> {
-    if(universeIdentifier && this.universe.id != universeIdentifier) {
+    if (universeIdentifier && this.universe.id != universeIdentifier) {
       let universe = this.MockUniverse(universeIdentifier);
       this.setUniverse(universe);
     }
@@ -56,8 +63,9 @@ export class UniverseService {
     return this.universe.artifactInstances.filter(x => x.artifactTypeIdentifier == artifactClassIdentifier);
   }
 
-  public searchArtifactInstances(artifactClass: ArtifactClass, query: string): ArtifactInstance[] {
-    return this.getArtifactInstances(artifactClass.identifier).filter(x => x.propertieValuePairs.find(x => x.value.includes(query)) || x.identifier.includes(query));
+  public searchArtifactInstances(artifactClass: ArtifactClass, query: string = "", count: number = 100): ArtifactInstance[] {
+    let filtered = this.getArtifactInstances(artifactClass.identifier).filter(x => x.propertieValuePairs.find(x => x.value.includes(query)) || x.identifier.includes(query));
+    return filtered.slice(0, count);
   }
 
   public deleteArtifactClass(artifact: ArtifactClass) {

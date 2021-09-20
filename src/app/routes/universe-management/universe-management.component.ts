@@ -44,7 +44,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
     this.universeService.getUniverseArtifactClasses(this.universeIdentifier).subscribe(
       artifacts => {
         this.selectedArtifactClass = artifacts[0];
-        this.filteredArtifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
+        this.filteredArtifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, "", 100);
       }
     );
 
@@ -52,7 +52,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
     .pipe(debounceTime(this.debounce), distinctUntilChanged())
     .subscribe(query => {
       if (this.selectedArtifactClass) {
-        this.filteredArtifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, query);
+        this.filteredArtifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, query, 100);
       }
     });
   }
@@ -82,7 +82,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
 
   refreshArtifactInstances() {
     if (this.selectedArtifactClass) {
-      this.filteredArtifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
+      this.filteredArtifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, "", 100);
     }
   }
 }
