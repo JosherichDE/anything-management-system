@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { HomepageComponent } from './homepage/homepage.component';
+import { HomepageComponent } from './routes/homepage/homepage.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UniverseManagementModule } from './universe-management/universe-management.module';

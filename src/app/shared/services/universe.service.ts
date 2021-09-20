@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { ARTIFACT_MOCKS } from '../models/artifact-class/artifact-class-mocks';
 import { ArtifactClass } from '../models/artifact-class/artifact-class.model';
 import { ArtifactInstance } from '../models/artifact-instance/artifact-instance.model';
@@ -10,17 +10,24 @@ import * as FileSaver from 'file-saver';
   providedIn: 'root'
 })
 export class UniverseService {
-  artifactClasses = ARTIFACT_MOCKS;
-  artifactInstances: ArtifactInstance[] = [];
-  universe: Universe;
+  private artifactClasses = ARTIFACT_MOCKS;
+  private artifactInstances: ArtifactInstance[] = [];
+  private universe: Universe;
+  private universeSubject: BehaviorSubject<Universe>;
 
   constructor() {
     this.universe = new Universe();
     this.universe.name = "My Default Universe";
+    this.universeSubject = new BehaviorSubject(this.universe);
   }
 
-  public getUniverse(): Observable<Universe> {
-    return of(this.universe);
+  setUniverse(universe: Universe) {
+    this.universe = universe;
+    this.universeSubject?.next(this.universe);
+  }
+
+  public getUniverse(): BehaviorSubject<Universe> {
+    return this.universeSubject;
   }
 
   public getUniverseArtifactClasses(universeId: string): Observable<ArtifactClass[]> {
@@ -73,5 +80,6 @@ export class UniverseService {
     this.universe = toLoad;
     this.artifactClasses = toLoad.artifactClasses;
     this.artifactInstances = toLoad.artifactInstances;
+    this.universeSubject.next(this.universe);
   }
 }
