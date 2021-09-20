@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { Universe } from 'src/app/shared/models/universe/universe.model';
-import { ArtifactClass } from '../../../shared/models/artifact-class/artifact-class.model';
-import { UniverseService } from '../../../shared/services/universe.service';
+import { ArtifactClass } from 'src/app/shared/models/artifact-class/artifact-class.model';
+import { UniverseService } from 'src/app/shared/services/universe.service';
 
 @Component({
-  selector: 'app-editor',
-  templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.less']
+  selector: 'app-universe-editor',
+  templateUrl: './universe-editor.component.html',
+  styleUrls: ['./universe-editor.component.less']
 })
 export class EditorComponent implements OnInit {
   routeSub: any;

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UniverseEditorRoutingModule } from './universe-editor-routing.module';
-import { EditorComponent } from './editor/editor.component';
+import { EditorComponent } from './universe-editor.component';
 import { ArtifactEditorComponent } from './artifact-editor/artifact-editor.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';

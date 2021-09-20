@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ManagementComponent } from './management/management.component';
+import { ManagementComponent } from './universe-management.component';
 
 const routes: Routes = [
   { path: 'universe-management/:universeId', component: ManagementComponent }];
