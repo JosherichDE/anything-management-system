@@ -26,9 +26,9 @@ export class EditorComponent implements OnInit {
       this.universeIdentifier = params['universeId'];
     });
 
+    this.universeService.getUniverse(this.universeIdentifier).subscribe(universe => this.universe = universe);
     this.universeService.getUniverseArtifactClasses(this.universeIdentifier).subscribe(artifacts => this.universeArtifacts = artifacts);
-    this.universeService.getUniverse().subscribe(universe => this.universe = universe);
-
+    
     this.universeNameControl.valueChanges.subscribe(x => {
       if (this.universe) {
         this.universe.name = x;

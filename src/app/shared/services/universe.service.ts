@@ -10,15 +10,25 @@ import * as FileSaver from 'file-saver';
   providedIn: 'root'
 })
 export class UniverseService {
-  private artifactClasses = ARTIFACT_MOCKS;
-  private artifactInstances: ArtifactInstance[] = [];
   private universe: Universe;
   private universeSubject: BehaviorSubject<Universe>;
 
   constructor() {
-    this.universe = new Universe();
-    this.universe.name = "My Default Universe";
+    this.universe = this.MockUniverse();
     this.universeSubject = new BehaviorSubject(this.universe);
+  }
+
+  private MockUniverse(universeIdentfier?: string) : Universe {
+    let mockUniverse = new Universe();
+    mockUniverse.name = "My Default Universe";
+    mockUniverse.artifactClasses = ARTIFACT_MOCKS;
+    mockUniverse.artifactInstances = [];
+
+    if(universeIdentfier) {
+      mockUniverse.id = universeIdentfier;
+    }
+
+    return mockUniverse;
   }
 
   setUniverse(universe: Universe) {
@@ -26,7 +36,12 @@ export class UniverseService {
     this.universeSubject?.next(this.universe);
   }
 
-  public getUniverse(): BehaviorSubject<Universe> {
+  public getUniverse(universeIdentifier?: string): BehaviorSubject<Universe> {
+    if(universeIdentifier && this.universe.id != universeIdentifier) {
+      let universe = this.MockUniverse(universeIdentifier);
+      this.setUniverse(universe);
+    }
+
     return this.universeSubject;
   }
 
@@ -34,11 +49,11 @@ export class UniverseService {
     if (this.universe.id != universeId) {
       console.log("oh no - id mismatch");
     }
-    return of(this.artifactClasses);
+    return of(this.universe.artifactClasses);
   }
 
   public getArtifactInstances(artifactClassIdentifier: string): ArtifactInstance[] {
-    return this.artifactInstances.filter(x => x.artifactTypeIdentifier == artifactClassIdentifier);
+    return this.universe.artifactInstances.filter(x => x.artifactTypeIdentifier == artifactClassIdentifier);
   }
 
   public searchArtifactInstances(artifactClass: ArtifactClass, query: string): ArtifactInstance[] {
@@ -46,29 +61,29 @@ export class UniverseService {
   }
 
   public deleteArtifactClass(artifact: ArtifactClass) {
-    this.artifactClasses.splice(this.artifactClasses.findIndex(item => item.identifier === artifact.identifier), 1);
+    this.universe.artifactClasses.splice(this.universe.artifactClasses.findIndex(item => item.identifier === artifact.identifier), 1);
   }
 
   addArtifactClass(): void {
-    this.artifactClasses.push(new ArtifactClass());
+    this.universe.artifactClasses.push(new ArtifactClass());
   }
 
   addArtifactInstance(selectedArtifactClass: ArtifactClass): void {
     let newArtifactInstance = ArtifactInstance.Create(selectedArtifactClass);
-    this.artifactInstances.push(newArtifactInstance);
+    this.universe.artifactInstances.push(newArtifactInstance);
   }
 
   deleteArtifactInstance(instance: ArtifactInstance) {
-    const index: number = this.artifactInstances.indexOf(instance);
+    const index: number = this.universe.artifactInstances.indexOf(instance);
     if (index !== -1) {
-      this.artifactInstances.splice(index, 1);
+      this.universe.artifactInstances.splice(index, 1);
     }
   }
 
   saveUniverse() {
     let toSave = this.universe;
-    toSave.artifactClasses = this.artifactClasses;
-    toSave.artifactInstances = this.artifactInstances;
+    toSave.artifactClasses = this.universe.artifactClasses;
+    toSave.artifactInstances = this.universe.artifactInstances;
 
     const blob = new Blob([JSON.stringify(toSave)], { type: 'application/json' });
     FileSaver.saveAs(blob, toSave.id);
@@ -78,8 +93,8 @@ export class UniverseService {
     const blobString: string = fileContent;
     let toLoad: Universe = JSON.parse(blobString);
     this.universe = toLoad;
-    this.artifactClasses = toLoad.artifactClasses;
-    this.artifactInstances = toLoad.artifactInstances;
+    this.universe.artifactClasses = toLoad.artifactClasses;
+    this.universe.artifactInstances = toLoad.artifactInstances;
     this.universeSubject.next(this.universe);
   }
 }

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ArtifactClass } from 'src/app/shared/models/artifact-class/artifact-class.model';
 import { UniverseService } from 'src/app/shared/services/universe.service';
 import { ArtifactInstance } from 'src/app/shared/models/artifact-instance/artifact-instance.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Universe } from 'src/app/shared/models/universe/universe.model';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,18 +14,22 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './universe-management.component.html',
   styleUrls: ['./universe-management.component.less']
 })
-export class ManagementComponent implements OnInit {
+export class ManagementComponent implements OnInit, OnDestroy {
 
   universeIdentifier: any;
-  routeSub: any;
-  universeArtifactClasses?: ArtifactClass[];
+  private routeSub?: Subscription;
   selectedArtifactClass?: ArtifactClass;
   selectedArtifactInstance?: ArtifactInstance;
-  artifactInstances?: ArtifactInstance[];
+  filteredArtifactInstances?: ArtifactInstance[];
   searchControl: FormControl = new FormControl();
   private debounce: number = 400;
+  universe?: Universe;
 
   constructor(private route: ActivatedRoute, private universeService: UniverseService) {
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -31,22 +37,24 @@ export class ManagementComponent implements OnInit {
       this.universeIdentifier = params['universeId'];
     });
 
-    this.searchControl.valueChanges
-      .pipe(debounceTime(this.debounce), distinctUntilChanged())
-      .subscribe(query => {
-        if (this.selectedArtifactClass) {
-          this.artifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, query);
-        }
-      });
-
+    this.universeService.getUniverse(this.universeIdentifier).subscribe(universe => {
+      this.universe = universe;
+    })
 
     this.universeService.getUniverseArtifactClasses(this.universeIdentifier).subscribe(
       artifacts => {
-        this.universeArtifactClasses = artifacts;
-        this.selectedArtifactClass = this.universeArtifactClasses[0];
-        this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
+        this.selectedArtifactClass = artifacts[0];
+        this.filteredArtifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
       }
     );
+
+    this.searchControl.valueChanges
+    .pipe(debounceTime(this.debounce), distinctUntilChanged())
+    .subscribe(query => {
+      if (this.selectedArtifactClass) {
+        this.filteredArtifactInstances = this.universeService.searchArtifactInstances(this.selectedArtifactClass, query);
+      }
+    });
   }
 
   onArtifactTypeSelection(e: any) {
@@ -65,7 +73,7 @@ export class ManagementComponent implements OnInit {
   }
 
   deleteArtifactInstance(instance?: ArtifactInstance) {
-    if (this.artifactInstances && instance) {
+    if (this.filteredArtifactInstances && instance) {
       this.universeService.deleteArtifactInstance(instance);
       this.selectedArtifactInstance = undefined;
       this.refreshArtifactInstances();
@@ -74,7 +82,7 @@ export class ManagementComponent implements OnInit {
 
   refreshArtifactInstances() {
     if (this.selectedArtifactClass) {
-      this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
+      this.filteredArtifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
     }
   }
 }
