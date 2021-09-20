@@ -1,6 +1,6 @@
 <h2>Universe Editor - ID: {{ universeIdentifier }}</h2>
-<p>
-    <input matInput type="text" [(ngModel)]="universe.name">
+<p *ngIf="universe">
+    <input  matInput type="text" [formControl]="universeNameControl">
 </p>
 
 <h3>Artifacts</h3>

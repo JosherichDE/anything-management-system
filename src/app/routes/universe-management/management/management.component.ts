@@ -48,7 +48,6 @@ export class ManagementComponent implements OnInit {
         this.artifactInstances = this.universeService.getArtifactInstances(this.selectedArtifactClass.identifier);
       }
     );
-
   }
 
   onArtifactTypeSelection(e: any) {

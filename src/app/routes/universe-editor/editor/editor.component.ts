@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Universe } from 'src/app/shared/models/universe/universe.model';
@@ -15,10 +16,10 @@ export class EditorComponent implements OnInit {
   universeIdentifier: any;
   universeName: any;
   universeArtifacts?: ArtifactClass[];
-  universe: Universe;
+  universe?: Universe;
+  universeNameControl: FormControl = new FormControl();
 
   constructor(private route: ActivatedRoute, private universeService: UniverseService) {
-    this.universe = new Universe();
   }
 
   ngOnInit(): void {
@@ -28,6 +29,12 @@ export class EditorComponent implements OnInit {
 
     this.universeService.getUniverseArtifactClasses(this.universeIdentifier).subscribe(artifacts => this.universeArtifacts = artifacts);
     this.universeService.getUniverse().subscribe(universe => this.universe = universe);
+
+    this.universeNameControl.valueChanges.subscribe(x => {
+      if (this.universe) {
+        this.universe.name = x;
+      }
+    });
   }
 
   addArtifact(): void {
