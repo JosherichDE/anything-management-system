@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ArtifactClass } from 'src/app/shared/models/artifact-class/artifact-class.model';
-import { UniverseService } from '../../shared/services/universe.service';
+import { UniverseService } from '../../../shared/services/universe.service';
 
 @Component({
   selector: 'app-artifact-editor',

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommonModule } from '@angular/common';
-import { UniverseEditorModule } from './universe-editor/universe-editor.module';
+import { UniverseEditorModule } from './routes/universe-editor/universe-editor.module';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
@@ -16,7 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { HomepageComponent } from './routes/homepage/homepage.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
-import { UniverseManagementModule } from './universe-management/universe-management.module';
+import { UniverseManagementModule } from './routes/universe-management/universe-management.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from './shared/shared.module';
 

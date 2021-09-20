@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ArtifactClass } from 'src/app/shared/models/artifact-class/artifact-class.model';
 import { UniverseService } from 'src/app/shared/services/universe.service';
-import { ArtifactInstance } from '../../shared/models/artifact-instance/artifact-instance.model';
+import { ArtifactInstance } from '../../../shared/models/artifact-instance/artifact-instance.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
